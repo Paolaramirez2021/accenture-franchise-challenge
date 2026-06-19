@@ -18,7 +18,9 @@ services:
     ports:
       - "8080:8080"
     environment:
+      # Forzamos la propiedad tanto en minúsculas como en mayúsculas de Spring
       SPRING_DATA_MONGODB_URI: mongodb://root:secret@mongodb:27017/franchise_db?authSource=admin
+      SPRING_MONGODB_URI: mongodb://root:secret@mongodb:27017/franchise_db?authSource=admin
     depends_on:
       - mongodb
 

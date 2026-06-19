@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Document(collection = "franquicias") // Esto le dice a Mongo que cree una tabla llamada franquicias
+@Document(collection = "franquicias")
 public class Franquicia {
     @Id
-    private String id; // El ID principal de la franquicia
+    private String id;
     private String nombre;
     private List<Sucursal> sucursales = new ArrayList<>();
 }

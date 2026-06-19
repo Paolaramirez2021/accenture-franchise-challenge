@@ -25,6 +25,12 @@ public class FranquiciaService {
     public Franquicia agregarSucursal(String franquiciaId, Sucursal sucursal) {
         Franquicia franquicia = repository.findById(franquiciaId)
                 .orElseThrow(() -> new RuntimeException("Franquicia no encontrada"));
+        
+        // 🔥 Asignamos un ID único universal antes de guardar la sucursal
+        if (sucursal.getId() == null || sucursal.getId().isEmpty()) {
+            sucursal.setId(UUID.randomUUID().toString());
+        }
+        
         franquicia.getSucursales().add(sucursal);
         return repository.save(franquicia);
     }
@@ -38,6 +44,11 @@ public class FranquiciaService {
                 .filter(s -> s.getId().equals(sucursalId))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Sucursal no encontrada"));
+
+        // 🔥 Asignamos un ID único universal antes de guardar el producto
+        if (producto.getId() == null || producto.getId().isEmpty()) {
+            producto.setId(UUID.randomUUID().toString());
+        }
 
         sucursal.getProductos().add(producto);
         return repository.save(franquicia);
@@ -80,7 +91,6 @@ public class FranquiciaService {
             Map<String, Object> resultado = new HashMap<>();
             resultado.put("sucursal", sucursal.getNombre());
             
-            // Usamos programación funcional avanzada (Streams) para buscar el mayor
             Optional<Producto> maxProducto = sucursal.getProductos().stream()
                     .max(Comparator.comparingInt(Producto::getStock));
             
